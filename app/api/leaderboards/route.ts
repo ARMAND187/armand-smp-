@@ -1,4 +1,4 @@
-﻿import { NextResponse, NextRequest } from 'next/server';
+import { NextResponse, NextRequest } from 'next/server';
 
 export const revalidate = 30;
 
@@ -9,7 +9,7 @@ const MAX_REQUESTS_PER_WINDOW = 30; // 30 req / min per IP
 export async function GET(req: NextRequest) {
   try {
     // Basic Rate Limiting
-    const ip = req.ip ?? req.headers.get('x-forwarded-for') ?? 'unknown-ip';
+    const ip = req.headers.get('x-forwarded-for') ?? 'unknown-ip';
     const now = Date.now();
     const rateData = rateLimitMap.get(ip) || { count: 0, lastReset: now };
 
