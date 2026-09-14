@@ -4,23 +4,27 @@ export const revalidate = 30; // Cache for 30 seconds
 
 export async function GET() {
   try {
-    const res = await fetch('http://rawchysmp.com:8080/api/leaderboards', {
+    const SUPABASE_URL = "https://shyiddpxzllyhiwssooi.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNoeWlkZHB4emxseWhpd3Nzb29pIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODkzMzUwNzgsImV4cCI6MjEwNDkxMTA3OH0.NZi1JjFtk6-m3VQejIAlRmp34jhSWjx8PxoZ8QAdScg";
+
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/leaderboards?id=eq.1&select=data`, {
       headers: {
-        'Authorization': 'Bearer rawchy_secure_api_key_2026'
+        'apikey': SUPABASE_KEY,
+        'Authorization': `Bearer ${SUPABASE_KEY}`
       },
       next: { revalidate: 30 }
     });
     
-    if (res.status === 503) {
-      return NextResponse.json({ success: false, error: "SERVER DATA TEMPORARILY UNAVAILABLE" }, { status: 503 });
-    }
-
     if (!res.ok) {
       throw new Error(`Endpoint returned ${res.status}`);
     }
 
-    const data = await res.json();
-    return NextResponse.json(data);
+    const rows = await res.json();
+    if (!rows || rows.length === 0) {
+       return NextResponse.json({ success: false, error: "SERVER DATA TEMPORARILY UNAVAILABLE" }, { status: 503 });
+    }
+
+    return NextResponse.json({ success: true, data: rows[0].data });
   } catch (err) {
     return NextResponse.json({ success: false, error: "SERVER DATA TEMPORARILY UNAVAILABLE" }, { status: 503 });
   }
