@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -63,30 +63,30 @@ export default function LeaderboardClient({
 
   const renderTable = (catId: string, title: string, items: LeaderboardItem[], limit = 10) => (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden mb-6 backdrop-blur-sm">
-      <div className="bg-zinc-800/50 px-6 py-4 border-b border-zinc-700">
+      <div className="bg-zinc-800/50 px-4 sm:px-6 py-4 border-b border-zinc-700">
         <h2 className="text-xl font-black uppercase tracking-wider text-cyan-400">{title}</h2>
       </div>
-      <div className="overflow-x-auto">
-        <table className="w-full text-left border-collapse">
+      <div className="overflow-hidden">
+        <table className="w-full text-left border-collapse table-fixed sm:table-auto">
           <thead>
-            <tr className="bg-zinc-900/80 text-zinc-400 text-sm uppercase tracking-wider">
-              <th className="px-6 py-3 font-semibold">Rank</th>
-              <th className="px-6 py-3 font-semibold">Player</th>
-              <th className="px-6 py-3 font-semibold text-right">Score</th>
+            <tr className="bg-zinc-900/80 text-zinc-400 text-xs sm:text-sm uppercase tracking-wider">
+              <th className="px-3 sm:px-6 py-3 font-semibold w-16 sm:w-auto">Rank</th>
+              <th className="px-3 sm:px-6 py-3 font-semibold truncate">Player</th>
+              <th className="px-3 sm:px-6 py-3 font-semibold text-right w-24 sm:w-auto">Score</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-zinc-800">
             {items.slice(0, limit).map((item) => (
               <tr key={item.rank} className="hover:bg-zinc-800/30 transition-colors">
-                <td className="px-6 py-4">
-                  <span className={`inline-flex items-center justify-center w-8 h-8 rounded-full font-bold text-sm ${item.rank === 1 ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/30' : item.rank === 2 ? 'bg-zinc-300/20 text-zinc-300 border border-zinc-300/30' : item.rank === 3 ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-zinc-800 text-zinc-500'}`}>
+                <td className="px-3 sm:px-6 py-3 sm:py-4">
+                  <span className={`inline-flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-full font-bold text-xs sm:text-sm ${item.rank === 1 ? 'bg-yellow-500/20 text-yellow-500 border border-yellow-500/30' : item.rank === 2 ? 'bg-zinc-300/20 text-zinc-300 border border-zinc-300/30' : item.rank === 3 ? 'bg-orange-500/20 text-orange-400 border border-orange-500/30' : 'bg-zinc-800 text-zinc-500'}`}>
                     #{item.rank}
                   </span>
                 </td>
-                <td className="px-6 py-4 font-bold text-zinc-200">
+                <td className="px-3 sm:px-6 py-3 sm:py-4 font-bold text-zinc-200 text-sm sm:text-base truncate">
                   {item.name}
                 </td>
-                <td className="px-6 py-4 text-right font-mono text-cyan-300 font-bold">
+                <td className="px-3 sm:px-6 py-3 sm:py-4 text-right font-mono text-cyan-300 font-bold text-sm sm:text-base truncate">
                   {catId === 'money' && !item.value.startsWith('$') ? '$' : ''}{item.value}
                 </td>
               </tr>
