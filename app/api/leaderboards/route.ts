@@ -51,7 +51,11 @@ export async function GET(req: NextRequest) {
         data: rows[0].data, 
         updated_at: rows[0].updated_at 
     });
-  } catch (err) {
+  } catch (err: any) {
+    console.error("API Error:", err);
+    if (err.message === "Missing Supabase Anon Key") {
+        return NextResponse.json({ success: false, error: "VERCEL MISSING ENV VARIABLE: SUPABASE_ANON_KEY" }, { status: 500 });
+    }
     return NextResponse.json({ success: false, error: "SERVER DATA TEMPORARILY UNAVAILABLE" }, { status: 503 });
   }
 }
