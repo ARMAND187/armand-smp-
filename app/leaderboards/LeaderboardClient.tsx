@@ -14,9 +14,23 @@ const CATEGORIES = [
   { id: 'playtime', icon: '⏱️', label: 'PLAYTIME', title: 'Top Playtime' },
 ];
 
-export default function LeaderboardClient({ initialData, initialError }) {
-  const [data, setData] = useState(initialData);
-  const [error, setError] = useState(initialError);
+type LeaderboardItem = {
+  rank: number;
+  name: string;
+  value: string;
+};
+
+type LeaderboardData = Record<string, LeaderboardItem[]>;
+
+export default function LeaderboardClient({ 
+  initialData, 
+  initialError 
+}: { 
+  initialData: LeaderboardData, 
+  initialError: string | null 
+}) {
+  const [data, setData] = useState<LeaderboardData>(initialData);
+  const [error, setError] = useState<string | null>(initialError);
   const [activeTab, setActiveTab] = useState('top');
   const [lastUpdated, setLastUpdated] = useState(new Date().toLocaleTimeString());
 
@@ -39,7 +53,7 @@ export default function LeaderboardClient({ initialData, initialError }) {
     return () => clearInterval(interval);
   }, []);
 
-  const renderTable = (catId, title, items, limit = 10) => (
+  const renderTable = (catId: string, title: string, items: LeaderboardItem[], limit = 10) => (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden mb-6 backdrop-blur-sm">
       <div className="bg-zinc-800/50 px-6 py-4 border-b border-zinc-700">
         <h2 className="text-xl font-black uppercase tracking-wider text-cyan-400">{title}</h2>
@@ -130,13 +144,13 @@ export default function LeaderboardClient({ initialData, initialError }) {
               >
                 {activeTab === 'top' ? (
                   <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                    {renderTable('money', '💰 Top Money', data.money, 3)}
-                    {renderTable('pul', '💎 Top Pul', data.pul, 3)}
-                    {renderTable('kills', '⚔️ Top Kills', data.kills, 3)}
-                    {renderTable('duels', '⚔️ Top Duel Wins', data.duels, 3)}
+                    {renderTable('money', '💰 Top Money', data.money || [], 3)}
+                    {renderTable('pul', '💎 Top Pul', data.pul || [], 3)}
+                    {renderTable('kills', '⚔️ Top Kills', data.kills || [], 3)}
+                    {renderTable('duels', '⚔️ Top Duel Wins', data.duels || [], 3)}
                   </div>
                 ) : (
-                  renderTable(activeTab, CATEGORIES.find(c => c.id === activeTab).title, data[activeTab], 10)
+                  renderTable(activeTab, CATEGORIES.find(c => c.id === activeTab)?.title || '', data[activeTab] || [], 10)
                 )}
               </motion.div>
             </AnimatePresence>
