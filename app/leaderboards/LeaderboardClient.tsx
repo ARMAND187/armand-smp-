@@ -35,7 +35,7 @@ export default function LeaderboardClient({
   const [lastUpdated, setLastUpdated] = useState(new Date().toLocaleTimeString());
 
   useEffect(() => {
-    const interval = setInterval(async () => {
+    const fetchLeaderboard = async () => {
       try {
         const res = await fetch('/api/leaderboards');
         const json = await res.json();
@@ -49,9 +49,17 @@ export default function LeaderboardClient({
       } catch (e) {
         setError("SERVER DATA TEMPORARILY UNAVAILABLE");
       }
-    }, 45000); // 45s
+    };
+
+    // If the server-side render failed to get data (e.g. Supabase was empty during Vercel build),
+    // fetch immediately on client load instead of waiting 45 seconds.
+    if (initialError) {
+      fetchLeaderboard();
+    }
+
+    const interval = setInterval(fetchLeaderboard, 45000);
     return () => clearInterval(interval);
-  }, []);
+  }, [initialError]);
 
   const renderTable = (catId: string, title: string, items: LeaderboardItem[], limit = 10) => (
     <div className="bg-zinc-900/50 border border-zinc-800 rounded-xl overflow-hidden mb-6 backdrop-blur-sm">
