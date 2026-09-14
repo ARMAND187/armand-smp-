@@ -14,11 +14,11 @@ const CATEGORIES = [
   { id: 'playtime', icon: '⏱️', label: 'PLAYTIME', title: 'Top Playtime' },
 ];
 
-export default function LeaderboardClient({ initialData }) {
+export default function LeaderboardClient({ initialData, initialError }) {
   const [data, setData] = useState(initialData);
+  const [error, setError] = useState(initialError);
   const [activeTab, setActiveTab] = useState('top');
   const [lastUpdated, setLastUpdated] = useState(new Date().toLocaleTimeString());
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const interval = setInterval(async () => {
@@ -27,10 +27,13 @@ export default function LeaderboardClient({ initialData }) {
         const json = await res.json();
         if (json.success) {
           setData(json.data);
+          setError(null);
           setLastUpdated(new Date().toLocaleTimeString());
+        } else {
+          setError("SERVER DATA TEMPORARILY UNAVAILABLE");
         }
       } catch (e) {
-        console.error("Failed to refresh leaderboard", e);
+        setError("SERVER DATA TEMPORARILY UNAVAILABLE");
       }
     }, 45000); // 45s
     return () => clearInterval(interval);
@@ -81,65 +84,68 @@ export default function LeaderboardClient({ initialData }) {
           </h1>
           <p className="text-zinc-400 mt-2 font-medium">The best hunters in the world.</p>
         </div>
-        <div className="mt-4 md:mt-0 text-sm font-mono text-zinc-500 bg-zinc-900/50 px-3 py-1.5 rounded-md border border-zinc-800 inline-flex items-center">
-          <span className="w-2 h-2 rounded-full bg-green-500 mr-2 animate-pulse"></span>
-          Live updating • Last sync: {lastUpdated}
+        <div className={`mt-4 md:mt-0 text-sm font-mono px-3 py-1.5 rounded-md border inline-flex items-center ${error ? 'bg-red-500/10 border-red-500/30 text-red-400' : 'bg-zinc-900/50 border-zinc-800 text-zinc-500'}`}>
+          <span className={`w-2 h-2 rounded-full mr-2 ${error ? 'bg-red-500' : 'bg-green-500 animate-pulse'}`}></span>
+          {error ? "OFFLINE" : `Live updating • Last sync: ${lastUpdated}`}
         </div>
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-8">
-        {/* Left Nav */}
-        <div className="w-full lg:w-64 flex-shrink-0">
-          <div className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-2 pb-4 lg:pb-0 hide-scrollbar sticky top-24">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setActiveTab(cat.id)}
-                className={`flex items-center whitespace-nowrap px-4 py-3 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-200 ${
-                  activeTab === cat.id
-                    ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.15)]"
-                    : "bg-zinc-900/50 text-zinc-400 border border-zinc-800 hover:bg-zinc-800 hover:text-zinc-200"
-                }`}
+      {error ? (
+        <div className="w-full bg-red-500/10 border border-red-500/20 rounded-xl p-12 text-center flex flex-col items-center justify-center">
+          <span className="text-4xl mb-4">⚠️</span>
+          <h2 className="text-2xl font-black text-red-500 tracking-wider mb-2">SERVER DATA TEMPORARILY UNAVAILABLE</h2>
+          <p className="text-red-400/80">The connection to the RawchySMP live database could not be established.</p>
+        </div>
+      ) : (
+        <div className="flex flex-col lg:flex-row gap-8">
+          {/* Left Nav */}
+          <div className="w-full lg:w-64 flex-shrink-0">
+            <div className="flex flex-row lg:flex-col overflow-x-auto lg:overflow-visible gap-2 pb-4 lg:pb-0 hide-scrollbar sticky top-24">
+              {CATEGORIES.map((cat) => (
+                <button
+                  key={cat.id}
+                  onClick={() => setActiveTab(cat.id)}
+                  className={`flex items-center whitespace-nowrap px-4 py-3 rounded-xl font-bold uppercase tracking-wider text-sm transition-all duration-200 ${
+                    activeTab === cat.id
+                      ? "bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 shadow-[0_0_15px_rgba(6,182,212,0.15)]"
+                      : "bg-zinc-900/50 text-zinc-400 border border-zinc-800 hover:bg-zinc-800 hover:text-zinc-200"
+                  }`}
+                >
+                  <span className="text-xl mr-3">{cat.icon}</span>
+                  {cat.label}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Right Content */}
+          <div className="flex-grow min-w-0">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activeTab}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
               >
-                <span className="text-xl mr-3">{cat.icon}</span>
-                {cat.label}
-              </button>
-            ))}
+                {activeTab === 'top' ? (
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+                    {renderTable('money', '💰 Top Money', data.money, 3)}
+                    {renderTable('pul', '💎 Top Pul', data.pul, 3)}
+                    {renderTable('kills', '⚔️ Top Kills', data.kills, 3)}
+                    {renderTable('duels', '⚔️ Top Duel Wins', data.duels, 3)}
+                  </div>
+                ) : (
+                  renderTable(activeTab, CATEGORIES.find(c => c.id === activeTab).title, data[activeTab], 10)
+                )}
+              </motion.div>
+            </AnimatePresence>
           </div>
         </div>
-
-        {/* Right Content */}
-        <div className="flex-grow min-w-0">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={activeTab}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-            >
-              {activeTab === 'top' ? (
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-                  {renderTable('money', '💰 Top Money', data.money, 3)}
-                  {renderTable('pul', '💎 Top Pul', data.pul, 3)}
-                  {renderTable('kills', '⚔️ Top Kills', data.kills, 3)}
-                  {renderTable('duels', '⚔️ Top Duel Wins', data.duels, 3)}
-                </div>
-              ) : (
-                renderTable(activeTab, CATEGORIES.find(c => c.id === activeTab).title, data[activeTab], 10)
-              )}
-            </motion.div>
-          </AnimatePresence>
-        </div>
-      </div>
+      )}
       <style jsx global>{`
-        .hide-scrollbar::-webkit-scrollbar {
-          display: none;
-        }
-        .hide-scrollbar {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
       `}</style>
     </div>
   );
