@@ -1,8 +1,9 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG } from "@/config/site";
 import { Analytics } from "@vercel/analytics/next";
+import { Navbar } from "./components/Navbar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -49,8 +50,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased bg-zinc-950 text-white min-h-screen">
-        {children}
+      <body className="font-sans antialiased bg-zinc-950 text-white min-h-screen flex flex-col">
+        <Navbar />
+        <div className="flex-grow">
+          {children}
+        </div>
         <Analytics />
       </body>
     </html>
