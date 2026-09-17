@@ -86,22 +86,28 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-6 relative"
+          className="mb-2 relative flex flex-col items-center"
         >
           {/* Logo glow effect */}
-          <div className="absolute inset-0 bg-cyan-500 blur-[80px] opacity-20 rounded-full"></div>
-          <img 
-            src="/center-text-logo.png" 
-            alt="RawchySMP" 
-            className="w-full max-w-md md:max-w-xl object-contain relative z-10 drop-shadow-2xl" 
-          />
+          <div className="absolute inset-0 bg-cyan-500 blur-[100px] opacity-20 rounded-full w-full h-full"></div>
+          
+          {/* Crown Icon */}
+          <svg className="w-12 h-12 md:w-16 md:h-16 text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] mb-[-10px] relative z-10" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
+          </svg>
+
+          {/* Styled Text Logo */}
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-black italic tracking-tighter uppercase relative z-10 flex items-center">
+            <span className="text-white" style={{ textShadow: '0 4px 10px rgba(0,0,0,0.8)' }}>RAWCHY</span>
+            <span className="text-cyan-400" style={{ textShadow: '0 4px 10px rgba(0,0,0,0.8), 0 0 30px rgba(6,182,212,0.6)' }}>SMP</span>
+          </h1>
         </motion.div>
 
         <motion.h2
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-2xl md:text-3xl font-black text-white mb-6 uppercase tracking-[0.2em]"
+          className="text-lg md:text-2xl font-bold text-white mb-6 uppercase tracking-[0.3em] md:tracking-[0.4em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
         >
           The Hunter's World
         </motion.h2>
