@@ -41,3 +41,4 @@ export default async function LeaderboardsPage() {
       <LeaderboardClient initialData={initialData} initialError={initialError} />
     </main>
   );
+}
