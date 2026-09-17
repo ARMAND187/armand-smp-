@@ -1,4 +1,7 @@
 import LeaderboardClient from "./LeaderboardClient";
+import { getLeaderboardSnapshot, type LeaderboardData } from "@/lib/leaderboards";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Leaderboards | RawchySMP",
@@ -10,22 +13,17 @@ const fallbackData = {
 };
 
 export default async function LeaderboardsPage() {
-  let initialData = fallbackData;
-  let initialError = null;
+  let initialData: LeaderboardData = fallbackData;
+  let initialError: string | null = null;
+  let initialUpdatedAt: string | null = null;
+  let initialNow = 0;
   
   try {
-    const res = await fetch(`https://rawchysmp.com/api/leaderboards`, { next: { revalidate: 30 } });
-    if (res.ok) {
-      const json = await res.json();
-      if (json.success) {
-        initialData = json.data;
-      } else {
-        initialError = json.error || "SERVER DATA TEMPORARILY UNAVAILABLE";
-      }
-    } else {
-      initialError = "SERVER DATA TEMPORARILY UNAVAILABLE";
-    }
-  } catch (e) {
+    const snapshot = await getLeaderboardSnapshot();
+    initialData = snapshot.data;
+    initialUpdatedAt = snapshot.updated_at;
+    initialNow = snapshot.checked_at;
+  } catch {
     initialError = "SERVER DATA TEMPORARILY UNAVAILABLE";
   }
 
@@ -38,7 +36,7 @@ export default async function LeaderboardsPage() {
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#05070A] via-[#05070A]/80 to-[#05070A] pointer-events-none"></div>
       <div className="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
       
-      <LeaderboardClient initialData={initialData} initialError={initialError} />
+      <LeaderboardClient initialData={initialData} initialError={initialError} initialUpdatedAt={initialUpdatedAt} initialNow={initialNow} />
     </main>
   );
 }

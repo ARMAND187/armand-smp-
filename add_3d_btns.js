@@ -1,7 +1,7 @@
 const fs = require('fs');
 let css = fs.readFileSync('app/globals.css', 'utf8');
 
-const newCSS = \
+const newCSS = `
 /* -------------------------------------------------------
    3D BUTTON VARIANTS (TgButton in ProductSection)
 ------------------------------------------------------- */
@@ -67,7 +67,7 @@ const newCSS = \
 .btn-3d-base:active {
   transform: translateY(2px);
 }
-\;
+`;
 
 fs.writeFileSync('app/globals.css', css + '\\n' + newCSS);
 console.log('done');

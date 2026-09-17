@@ -35,13 +35,13 @@ export const metadata: Metadata = {
     title: "RawchySMP | The Hunter's World",
     description: SITE_CONFIG.description,
     siteName: SITE_CONFIG.name,
-    images: [],
+    images: [{ url: "/rawchysmp-logo.jpg", alt: "RawchySMP" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "RawchySMP | The Hunter's World",
     description: SITE_CONFIG.description,
-    images: [],
+    images: ["/rawchysmp-logo.jpg"],
   },
   robots: {
     index: true,

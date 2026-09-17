@@ -1,6 +1,7 @@
 "use client";
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 export function Navbar() {
@@ -15,7 +16,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-14 sm:h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center gap-2 group">
-              <img src="/rawchysmp-logo.jpg" alt="Logo" className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-700/50 group-hover:border-[#00E5FF]/50 transition-colors" />
+              <Image src="/rawchysmp-logo.jpg" alt="RawchySMP logo" width={32} height={32} className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-700/50 group-hover:border-[#00E5FF]/50 transition-colors" />
               <span className="text-sm sm:text-xl font-black tracking-tighter text-slate-50 uppercase drop-shadow-sm group-hover:text-white transition-colors">
                 RAWCHY<span className="text-[#00E5FF]">SMP</span>
               </span>

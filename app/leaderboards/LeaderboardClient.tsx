@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { formatLastSync, isServerOnline, SYNC_INTERVAL_MS } from "@/lib/leaderboard-status";
 
 const CATEGORIES = [
   { id: 'top', icon: '🏆', label: 'TOP', title: 'Top Overview' },
@@ -24,42 +25,58 @@ type LeaderboardData = Record<string, LeaderboardItem[]>;
 
 export default function LeaderboardClient({ 
   initialData, 
-  initialError 
+  initialError,
+  initialUpdatedAt,
+  initialNow,
 }: { 
   initialData: LeaderboardData, 
-  initialError: string | null 
+  initialError: string | null,
+  initialUpdatedAt: string | null,
+  initialNow: number,
 }) {
   const [data, setData] = useState<LeaderboardData>(initialData);
   const [error, setError] = useState<string | null>(initialError);
   const [activeTab, setActiveTab] = useState('top');
-  const [lastUpdated, setLastUpdated] = useState(new Date().toLocaleTimeString());
+  const [lastUpdated, setLastUpdated] = useState(initialUpdatedAt);
+  const [now, setNow] = useState(initialNow);
+  const online = isServerOnline(lastUpdated, now);
 
   useEffect(() => {
+    let disposed = false;
+    let pending = false;
+    let controller: AbortController | null = null;
     const fetchLeaderboard = async () => {
+      if (pending) return;
+      pending = true;
+      controller = new AbortController();
+      const timeout = setTimeout(() => controller?.abort(), 10_000);
       try {
-        const res = await fetch('/api/leaderboards');
+        const res = await fetch('/api/leaderboards', { cache: 'no-store', signal: controller.signal });
         const json = await res.json();
-        if (json.success) {
+        if (disposed) return;
+        if (res.ok && json.success && json.data && typeof json.updated_at === 'string' && Number.isFinite(Date.parse(json.updated_at))) {
           setData(json.data);
           setError(null);
-          setLastUpdated(new Date().toLocaleTimeString());
+          setLastUpdated(json.updated_at);
         } else {
           setError("SERVER DATA TEMPORARILY UNAVAILABLE");
         }
-      } catch (e) {
-        setError("SERVER DATA TEMPORARILY UNAVAILABLE");
+      } catch {
+        if (!disposed) setError("SERVER DATA TEMPORARILY UNAVAILABLE");
+      } finally {
+        clearTimeout(timeout);
+        pending = false;
+        if (!disposed) setNow(Date.now());
       }
     };
 
     // If the server-side render failed to get data (e.g. Supabase was empty during Vercel build),
     // fetch immediately on client load instead of waiting 45 seconds.
-    if (initialError) {
-      fetchLeaderboard();
-    }
-
-    const interval = setInterval(fetchLeaderboard, 45000);
-    return () => clearInterval(interval);
-  }, [initialError]);
+    void fetchLeaderboard();
+    const interval = setInterval(fetchLeaderboard, SYNC_INTERVAL_MS);
+    const clock = setInterval(() => setNow(Date.now()), 1000);
+    return () => { disposed = true; controller?.abort(); clearInterval(interval); clearInterval(clock); };
+  }, []);
 
   const renderTable = (catId: string, title: string, items: LeaderboardItem[], limit = 10) => (
     <div className="bg-[#111827]/75 border border-[#1E293B] rounded-xl overflow-hidden mb-6 backdrop-blur-md transition-all duration-300 hover:border-[#00E5FF]/30">
@@ -106,13 +123,13 @@ export default function LeaderboardClient({
           </h1>
           <p className="text-[#94A3B8] mt-2 font-medium">The best hunters in the world.</p>
         </div>
-        <div className={`mt-4 md:mt-0 text-sm font-mono px-3 py-1.5 rounded-md border inline-flex items-center ${error ? 'bg-[#EF4444]/10 border-[#EF4444]/30 text-[#EF4444]' : 'bg-[#111827]/80 border-[#1E293B] text-slate-400'}`}>
-          <span className={`w-2 h-2 rounded-full mr-2 ${error ? 'bg-[#EF4444]' : 'bg-[#22C55E] animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]'}`}></span>
-          {error ? "OFFLINE" : `Live updating ⚡ Last sync: ${lastUpdated}`}
+        <div role="status" title="Baghdad time. Offline is inferred after 90 seconds without a successful upload. The timestamp is the last saved sync, not the exact shutdown time." className={`mt-4 md:mt-0 text-sm font-mono px-3 py-1.5 rounded-md border inline-flex items-center ${!online || error ? 'bg-[#EF4444]/10 border-[#EF4444]/30 text-[#EF4444]' : 'bg-[#111827]/80 border-[#1E293B] text-slate-400'}`}>
+          <span className={`w-2 h-2 shrink-0 rounded-full mr-2 ${!online || error ? 'bg-[#EF4444]' : 'bg-[#22C55E] animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]'}`}></span>
+          {error ? `Sync unavailable • Last sync: ${formatLastSync(lastUpdated)}` : online ? `Live updating ⚡ Last sync: ${formatLastSync(lastUpdated, false)}` : `Server offline • Last sync: ${formatLastSync(lastUpdated)}`}
         </div>
       </div>
 
-      {error ? (
+      {error && !lastUpdated ? (
         <div className="w-full bg-[#EF4444]/10 border border-[#EF4444]/20 rounded-xl p-12 text-center flex flex-col items-center justify-center">
           <span className="text-4xl mb-4">⚠️</span>
           <h2 className="text-2xl font-black text-[#EF4444] tracking-wider mb-2 font-montserrat">SERVER DATA TEMPORARILY UNAVAILABLE</h2>

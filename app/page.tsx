@@ -3,7 +3,8 @@
 import { useEffect, useState } from "react";
 import { SERVER_IP, SOCIAL_LINKS } from "@/config/site";
 import { motion } from "framer-motion";
-import { Users, Copy, Check, Info, Clock, ArrowRight } from "lucide-react";
+import { Users, Copy, Check, Clock, ArrowRight } from "lucide-react";
+import { formatLastSync, isServerOnline, SYNC_INTERVAL_MS } from "@/lib/leaderboard-status";
 
 export default function Home() {
   const [playerCount, setPlayerCount] = useState<number | null>(null);
@@ -16,17 +17,14 @@ export default function Home() {
   useEffect(() => {
     async function fetchStatus() {
       try {
-        const res = await fetch('/api/leaderboards');
+        const res = await fetch('/api/leaderboards', { cache: 'no-store', signal: AbortSignal.timeout(10_000) });
         const json = await res.json();
         
-        if (json.success && json.data.server && json.updated_at) {
+        if (res.ok && json.success && json.data.server && json.updated_at) {
           const lastUpdated = new Date(json.updated_at);
           setLastUpdateDate(lastUpdated);
           
-          const now = new Date().getTime();
-          const diffMinutes = (now - lastUpdated.getTime()) / 1000 / 60;
-          
-          if (diffMinutes < 3) {
+          if (isServerOnline(json.updated_at, Date.now())) {
             setOnline(true);
             setPlayerCount(json.data.server.online);
             setMaxPlayers(json.data.server.max);
@@ -36,7 +34,7 @@ export default function Home() {
         } else {
           setOnline(false);
         }
-      } catch (error) {
+      } catch {
         setOnline(false);
       } finally {
         setLoading(false);
@@ -44,19 +42,22 @@ export default function Home() {
     }
     
     fetchStatus();
-    const interval = setInterval(fetchStatus, 30000); // Check every 30s
+    const interval = setInterval(fetchStatus, SYNC_INTERVAL_MS);
     return () => clearInterval(interval);
   }, []);
 
-  const copyIp = () => {
-    navigator.clipboard.writeText(SERVER_IP);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const copyIp = async () => {
+    try {
+      await navigator.clipboard.writeText(SERVER_IP);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
   };
 
   const formatDate = (date: Date) => {
-    return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) + ' • ' + 
-           date.toLocaleTimeString('en-US', { hour: '2-digit', minute:'2-digit' });
+    return formatLastSync(date.toISOString());
   };
 
   return (
@@ -116,7 +117,7 @@ export default function Home() {
           <div className="h-[2px] flex-grow bg-gradient-to-l from-[#00E5FF] to-transparent shadow-[0_0_10px_rgba(0,229,255,0.6)] opacity-70"></div>
           
           <h2 className="text-sm md:text-xl font-bold text-slate-50 uppercase tracking-[0.2em] md:tracking-[0.4em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap font-montserrat">
-            The Hunter's World
+            The Hunter&apos;s World
           </h2>
           
           {/* Right glowing line */}
@@ -133,7 +134,10 @@ export default function Home() {
           <p className="text-slate-50 text-sm md:text-base font-bold tracking-widest uppercase font-montserrat">Build. Hunt. Survive. <span className="text-[#00E5FF]">GO TOP</span></p>
         </motion.div>
 
-        <motion.button
+        <motion.a
+          href={SOCIAL_LINKS.discord}
+          target="_blank"
+          rel="noopener noreferrer"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
@@ -141,7 +145,7 @@ export default function Home() {
         >
           Get Ready 
           <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-        </motion.button>
+        </motion.a>
 
         {/* Bottom Status Box */}
         <motion.div 
