@@ -71,13 +71,13 @@ export default function Home() {
       {/* Optional grid overlay */}
       <div className="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
 
-      <div className="z-10 flex flex-col items-center px-4 text-center max-w-5xl mx-auto w-full pt-12 pb-12">
+      <div className="z-10 flex flex-col items-center px-4 text-center max-w-5xl mx-auto w-full py-4 md:py-8">
         
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center justify-center px-6 py-1.5 rounded-full border border-cyan-500/50 bg-cyan-950/30 text-cyan-400 font-bold tracking-widest text-xs md:text-sm uppercase mb-8 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
+          className="inline-flex items-center justify-center px-6 py-1.5 rounded-full border border-cyan-500/50 bg-cyan-950/30 text-cyan-400 font-bold tracking-widest text-xs md:text-sm uppercase mb-4 shadow-[0_0_15px_rgba(6,182,212,0.2)]"
         >
           Coming Soon
         </motion.div>
@@ -86,37 +86,48 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-2 relative flex flex-col items-center"
+          className="mb-1 relative flex flex-col items-center w-full"
         >
           {/* Logo glow effect */}
           <div className="absolute inset-0 bg-cyan-500 blur-[100px] opacity-20 rounded-full w-full h-full"></div>
           
           {/* Crown Icon */}
-          <svg className="w-12 h-12 md:w-16 md:h-16 text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] mb-[-10px] relative z-10" viewBox="0 0 24 24" fill="currentColor">
+          <svg className="w-10 h-10 md:w-14 md:h-14 text-cyan-400 drop-shadow-[0_0_15px_rgba(34,211,238,0.8)] relative z-10" viewBox="0 0 24 24" fill="currentColor">
             <path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5zm14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1z"/>
           </svg>
 
+          {/* Glowing line under crown */}
+          <div className="w-full max-w-[250px] md:max-w-[350px] h-[2px] bg-gradient-to-r from-transparent via-cyan-400 to-transparent shadow-[0_0_12px_rgba(34,211,238,1)] mb-[-10px] relative z-0"></div>
+
           {/* Styled Text Logo */}
-          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-[7rem] font-black italic tracking-tighter uppercase relative z-10 flex items-center">
+          <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-black italic tracking-tighter uppercase relative z-10 flex items-center leading-tight">
             <span className="text-white" style={{ textShadow: '0 4px 10px rgba(0,0,0,0.8)' }}>RAWCHY</span>
             <span className="text-cyan-400" style={{ textShadow: '0 4px 10px rgba(0,0,0,0.8), 0 0 30px rgba(6,182,212,0.6)' }}>SMP</span>
           </h1>
         </motion.div>
 
-        <motion.h2
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
-          className="text-lg md:text-2xl font-bold text-white mb-6 uppercase tracking-[0.3em] md:tracking-[0.4em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+          className="flex items-center justify-center gap-3 md:gap-6 w-full max-w-lg md:max-w-2xl mb-4"
         >
-          The Hunter's World
-        </motion.h2>
+          {/* Left glowing line */}
+          <div className="h-[2px] flex-grow bg-gradient-to-l from-cyan-500 to-transparent shadow-[0_0_10px_rgba(34,211,238,0.8)] opacity-70"></div>
+          
+          <h2 className="text-sm md:text-xl font-bold text-white uppercase tracking-[0.2em] md:tracking-[0.4em] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap">
+            The Hunter's World
+          </h2>
+          
+          {/* Right glowing line */}
+          <div className="h-[2px] flex-grow bg-gradient-to-r from-cyan-500 to-transparent shadow-[0_0_10px_rgba(34,211,238,0.8)] opacity-70"></div>
+        </motion.div>
 
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.5, delay: 0.3 }}
-          className="text-zinc-300 text-sm md:text-base max-w-2xl mb-8 flex flex-col gap-2 font-medium"
+          className="text-zinc-300 text-sm md:text-base max-w-2xl mb-4 flex flex-col gap-2 font-medium"
         >
           <p>A new adventure is coming.</p>
           <p className="tracking-widest uppercase">Build. Hunt. Survive. <span className="text-cyan-400 font-bold">GO TOP</span></p>
@@ -126,7 +137,7 @@ export default function Home() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="group inline-flex items-center gap-2 px-8 py-3 rounded-full border border-cyan-500 bg-cyan-950/20 text-cyan-400 font-bold uppercase tracking-wider hover:bg-cyan-900/40 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all mb-16"
+          className="group inline-flex items-center gap-2 px-8 py-3 rounded-full border border-cyan-500 bg-cyan-950/20 text-cyan-400 font-bold uppercase tracking-wider hover:bg-cyan-900/40 hover:shadow-[0_0_20px_rgba(6,182,212,0.4)] transition-all mb-8"
         >
           Get Ready 
           <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
