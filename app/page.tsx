@@ -102,7 +102,7 @@ export default function Home() {
           {/* Styled Text Logo */}
           <h1 className="text-4xl sm:text-6xl md:text-7xl lg:text-[6.5rem] font-black italic tracking-tighter uppercase relative z-10 flex items-center leading-tight font-montserrat">
             <span className="text-slate-50" style={{ textShadow: '0 4px 10px rgba(0,0,0,0.8)' }}>RAWCHY</span>
-            <span className="text-[#00E5FF] bg-clip-text text-transparent bg-gradient-to-b from-[#00E5FF] to-[#007BFF]" style={{ filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.8)) drop-shadow(0 0 20px rgba(0,229,255,0.4))' }}>SMP</span>
+            <span className="text-[#00E5FF] bg-clip-text text-transparent bg-gradient-to-b from-[#00E5FF] to-[#007BFF] pr-2 md:pr-4" style={{ filter: 'drop-shadow(0 4px 10px rgba(0,0,0,0.8)) drop-shadow(0 0 20px rgba(0,229,255,0.4))' }}>SMP</span>
           </h1>
         </motion.div>
 
