@@ -71,13 +71,13 @@ export default function Home() {
       {/* Optional grid overlay */}
       <div className="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
 
-      <div className="z-10 flex flex-col items-center px-4 text-center max-w-5xl mx-auto w-full py-4 md:py-8">
+      <div className="z-10 flex flex-col items-center px-4 text-center max-w-5xl mx-auto w-full py-6 md:py-8">
         
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
-          className="inline-flex items-center justify-center px-6 py-1.5 rounded-full border border-red-500/50 bg-red-950/20 text-red-500 font-bold tracking-widest text-xs md:text-sm uppercase mb-4 shadow-[0_0_15px_rgba(239,68,68,0.15)] font-montserrat"
+          className="inline-flex items-center justify-center px-6 py-1.5 rounded-full border border-red-500/50 bg-red-950/20 text-red-500 font-bold tracking-widest text-xs md:text-sm uppercase mb-8 md:mb-4 shadow-[0_0_15px_rgba(239,68,68,0.15)] font-montserrat"
         >
           Coming Soon
         </motion.div>
