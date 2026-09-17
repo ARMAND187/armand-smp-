@@ -529,14 +529,14 @@ h1, h2, h3 {
   scrollbar-width: none; /* Firefox */
 }
 
-::-webkit-scrollbar       { width: 5px; height: 5px; }
-::-webkit-scrollbar-track { background: var(--bg-primary); }
-::-webkit-scrollbar-thumb { background: rgba(124, 58, 237, 0.4); border-radius: 4px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(124, 58, 237, 0.65); }
+::-webkit-scrollbar       { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: #05070A; }
+::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.2); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(0, 229, 255, 0.5); }
 
 @keyframes breathe-scale {
-  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(124, 58, 237, 0.4); }
-  50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(124, 58, 237, 0.8); }
+  0%, 100% { transform: scale(1); box-shadow: 0 0 20px rgba(0, 229, 255, 0.2); }
+  50% { transform: scale(1.05); box-shadow: 0 0 40px rgba(0, 229, 255, 0.5); }
 }
 .animate-breathe {
   animation: breathe-scale 2.5s ease-in-out infinite;
