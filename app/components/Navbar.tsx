@@ -41,13 +41,13 @@ export function Navbar() {
           <div className="flex md:hidden space-x-2">
             <Link 
               href="/" 
-              className={`text-[10px] px-1 py-2 font-bold uppercase transition-colors ${isHome ? 'text-[#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
+              className={`text-[10px] px-2 py-2 font-bold uppercase transition-colors ${isHome ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
             >
               Home
             </Link>
             <Link 
               href="/leaderboards" 
-              className={`text-[10px] px-1 py-2 font-bold uppercase transition-colors ${isLeaderboards ? 'text-[#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
+              className={`text-[10px] px-2 py-2 font-bold uppercase transition-colors ${isLeaderboards ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
             >
               Leaderboards
             </Link>
