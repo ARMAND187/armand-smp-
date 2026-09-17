@@ -1,5 +1,5 @@
-﻿import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata } from "next";
+import { Inter, Montserrat } from "next/font/google";
 import "./globals.css";
 import { SITE_CONFIG } from "@/config/site";
 import { Analytics } from "@vercel/analytics/next";
@@ -9,6 +9,12 @@ const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-inter",
+});
+
+const montserrat = Montserrat({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-montserrat",
 });
 
 export const metadata: Metadata = {
@@ -49,8 +55,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={inter.variable}>
-      <body className="font-sans antialiased bg-zinc-950 text-white min-h-screen flex flex-col">
+    <html lang="en" className={`${inter.variable} ${montserrat.variable}`}>
+      <body className="font-sans antialiased bg-[#05070A] text-slate-100 min-h-screen flex flex-col">
         <Navbar />
         <div className="flex-grow">
           {children}

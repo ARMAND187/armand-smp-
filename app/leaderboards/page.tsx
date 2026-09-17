@@ -1,4 +1,4 @@
-﻿import LeaderboardClient from "./LeaderboardClient";
+import LeaderboardClient from "./LeaderboardClient";
 
 export const metadata = {
   title: "Leaderboards | RawchySMP",
@@ -29,5 +29,15 @@ export default async function LeaderboardsPage() {
     initialError = "SERVER DATA TEMPORARILY UNAVAILABLE";
   }
 
-  return <LeaderboardClient initialData={initialData} initialError={initialError} />;
-}
+  return (
+    <main className="relative min-h-screen bg-[#05070A] font-sans">
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-10 mix-blend-screen pointer-events-none"
+        style={{ backgroundImage: "url('/bg-warrior.jpg')", backgroundAttachment: "fixed" }}
+      ></div>
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#05070A] via-[#05070A]/80 to-[#05070A] pointer-events-none"></div>
+      <div className="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
+      
+      <LeaderboardClient initialData={initialData} initialError={initialError} />
+    </main>
+  );
