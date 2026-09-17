@@ -61,8 +61,12 @@ export default function Home() {
 
   return (
     <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#050B14]">
-      {/* Dark Minecraft-esque gradient background */}
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-[#0A192F] via-[#050B14] to-black opacity-80"></div>
+      {/* Dark Minecraft warrior background */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center opacity-40 mix-blend-screen"
+        style={{ backgroundImage: "url('/bg-warrior.jpg')" }}
+      ></div>
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#050B14] via-[#050B14]/60 to-transparent"></div>
       
       {/* Optional grid overlay */}
       <div className="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
@@ -82,14 +86,14 @@ export default function Home() {
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, delay: 0.1 }}
-          className="mb-2 relative"
+          className="mb-6 relative"
         >
           {/* Logo glow effect */}
-          <div className="absolute inset-0 bg-orange-500 blur-[80px] opacity-20 rounded-full"></div>
+          <div className="absolute inset-0 bg-cyan-500 blur-[80px] opacity-20 rounded-full"></div>
           <img 
-            src="/rawchysmp-logo.jpg" 
-            alt="RawchySMP Logo" 
-            className="w-56 h-56 md:w-72 md:h-72 object-contain relative z-10 rounded-full border-4 border-zinc-900/50 shadow-2xl" 
+            src="/center-text-logo.png" 
+            alt="RawchySMP" 
+            className="w-full max-w-md md:max-w-xl object-contain relative z-10 drop-shadow-2xl" 
           />
         </motion.div>
 
