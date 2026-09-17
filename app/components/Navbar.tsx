@@ -7,7 +7,7 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
             <Link href="/" className="flex-shrink-0 flex items-center gap-2 group">
-              <img src="/rawchysmp-logo.jpg" alt="Logo" className="w-8 h-8 rounded-md border border-slate-700/50 group-hover:border-[#00E5FF]/50 transition-colors" />
+              <img src="/rawchysmp-logo.jpg" alt="Logo" className="w-8 h-8 rounded-full border border-slate-700/50 group-hover:border-[#00E5FF]/50 transition-colors" />
               <span className="text-xl font-black tracking-tighter text-slate-50 uppercase drop-shadow-sm group-hover:text-white transition-colors">
                 RAWCHY<span className="text-[#00E5FF]">SMP</span>
               </span>
