@@ -1,10 +1,9 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import { SERVER_IP, SOCIAL_LINKS } from "@/config/site";
 import { motion } from "framer-motion";
 import { Users, Copy, Check, Info, Clock, ArrowRight } from "lucide-react";
-import Image from "next/image";
 
 export default function Home() {
   const [playerCount, setPlayerCount] = useState<number | null>(null);
