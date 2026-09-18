@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://armand-store.vercel.app/sitemap.xml
+Sitemap: https://rawchysmp.com/sitemap.xml

@@ -8,13 +8,13 @@ import { Navbar } from "./components/Navbar";
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-inter",
+  variable: "--font-rawchy-sans",
 });
 
 const montserrat = Montserrat({
   subsets: ["latin"],
   display: "swap",
-  variable: "--font-montserrat",
+  variable: "--font-rawchy-display",
 });
 
 export const metadata: Metadata = {
@@ -29,19 +29,22 @@ export const metadata: Metadata = {
     "SMP"
   ],
   metadataBase: new URL(SITE_CONFIG.url),
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
     type: "website",
     url: SITE_CONFIG.url,
     title: "RawchySMP | The Hunter's World",
     description: SITE_CONFIG.description,
     siteName: SITE_CONFIG.name,
-    images: [{ url: "/rawchysmp-logo.jpg", alt: "RawchySMP" }],
+    images: [{ url: "/opengraph-image", width: 1200, height: 630, alt: "RawchySMP - The Hunter's World" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "RawchySMP | The Hunter's World",
     description: SITE_CONFIG.description,
-    images: ["/rawchysmp-logo.jpg"],
+    images: ["/opengraph-image"],
   },
   robots: {
     index: true,

@@ -2,57 +2,76 @@
 
 import { useEffect, useState } from "react";
 import { SERVER_IP, SOCIAL_LINKS } from "@/config/site";
-import { motion } from "framer-motion";
+import { motion, MotionConfig } from "framer-motion";
 import { Users, Copy, Check, Clock, ArrowRight } from "lucide-react";
 import { formatLastSync, isServerOnline, SYNC_INTERVAL_MS } from "@/lib/leaderboard-status";
+import { isLeaderboardData } from "@/lib/leaderboard-data";
 
 export default function Home() {
   const [playerCount, setPlayerCount] = useState<number | null>(null);
   const [maxPlayers, setMaxPlayers] = useState<number | null>(null);
-  const [online, setOnline] = useState<boolean>(false);
+  const [now, setNow] = useState(0);
+  const [syncError, setSyncError] = useState(false);
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
   const [lastUpdateDate, setLastUpdateDate] = useState<Date | null>(null);
+  const [copyError, setCopyError] = useState(false);
+  const online = !syncError && isServerOnline(lastUpdateDate?.toISOString() ?? null, now);
 
   useEffect(() => {
+    let disposed = false;
+    let pending = false;
+    let controller: AbortController | null = null;
     async function fetchStatus() {
+      if (pending) return;
+      pending = true;
+      controller = new AbortController();
+      const timeout = setTimeout(() => controller?.abort(), 10_000);
       try {
-        const res = await fetch('/api/leaderboards', { cache: 'no-store', signal: AbortSignal.timeout(10_000) });
+        const res = await fetch('/api/leaderboards', { cache: 'no-store', signal: controller.signal });
         const json = await res.json();
+        if (disposed) return;
         
-        if (res.ok && json.success && json.data.server && json.updated_at) {
+        if (res.ok && json.success && isLeaderboardData(json.data) &&
+            typeof json.updated_at === 'string' && Number.isFinite(Date.parse(json.updated_at))) {
           const lastUpdated = new Date(json.updated_at);
           setLastUpdateDate(lastUpdated);
           
-          if (isServerOnline(json.updated_at, Date.now())) {
-            setOnline(true);
-            setPlayerCount(json.data.server.online);
-            setMaxPlayers(json.data.server.max);
-          } else {
-            setOnline(false);
-          }
+          setPlayerCount(json.data.server.online);
+          setMaxPlayers(json.data.server.max);
+          setSyncError(false);
         } else {
-          setOnline(false);
+          setSyncError(true);
         }
       } catch {
-        setOnline(false);
+        if (!disposed) setSyncError(true);
       } finally {
-        setLoading(false);
+        clearTimeout(timeout);
+        pending = false;
+        if (!disposed) { setLoading(false); setNow(Date.now()); }
       }
     }
     
-    fetchStatus();
+    void fetchStatus();
     const interval = setInterval(fetchStatus, SYNC_INTERVAL_MS);
-    return () => clearInterval(interval);
+    const clock = setInterval(() => setNow(Date.now()), 1000);
+    return () => { disposed = true; controller?.abort(); clearInterval(interval); clearInterval(clock); };
   }, []);
+
+  useEffect(() => {
+    if (!copied) return;
+    const timeout = setTimeout(() => setCopied(false), 2000);
+    return () => clearTimeout(timeout);
+  }, [copied]);
 
   const copyIp = async () => {
     try {
       await navigator.clipboard.writeText(SERVER_IP);
+      setCopyError(false);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
     } catch {
       setCopied(false);
+      setCopyError(true);
     }
   };
 
@@ -61,6 +80,7 @@ export default function Home() {
   };
 
   return (
+    <MotionConfig reducedMotion="user">
     <main className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-[#05070A] font-sans">
       {/* Dark Minecraft warrior background */}
       <div 
@@ -69,8 +89,7 @@ export default function Home() {
       ></div>
       <div className="absolute inset-0 z-0 bg-gradient-to-t from-[#05070A] via-[#05070A]/70 to-[#05070A]/30"></div>
       
-      {/* Optional grid overlay */}
-      <div className="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
+      <div className="world-texture absolute inset-0 z-0 opacity-30 mix-blend-overlay"></div>
 
       <div className="z-10 flex flex-col items-center px-4 text-center max-w-5xl mx-auto w-full py-6 md:py-8">
         
@@ -134,32 +153,33 @@ export default function Home() {
           <p className="text-slate-50 text-sm md:text-base font-bold tracking-widest uppercase font-montserrat">Build. Hunt. Survive. <span className="text-[#00E5FF]">GO TOP</span></p>
         </motion.div>
 
-        <motion.a
-          href={SOCIAL_LINKS.discord}
-          target="_blank"
-          rel="noopener noreferrer"
+        <motion.button
+          type="button"
+          onClick={copyIp}
+          aria-live="polite"
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="group inline-flex items-center gap-2 px-8 py-3 rounded-full border border-[#00E5FF]/80 bg-[#00E5FF]/10 text-[#00E5FF] font-bold uppercase tracking-wider hover:bg-[#00E5FF]/20 hover:-translate-y-[2px] hover:shadow-[0_0_20px_rgba(0,229,255,0.3)] transition-all duration-200 mb-8 font-montserrat"
+          className="group min-h-12 inline-flex items-center gap-2 px-8 py-3 rounded-full border border-[#00E5FF]/80 bg-[#00E5FF]/10 text-[#00E5FF] font-bold uppercase tracking-wider hover:bg-[#00E5FF]/20 hover:-translate-y-[2px] hover:shadow-[0_0_20px_rgba(0,229,255,0.3)] transition-all duration-200 mb-8 font-montserrat"
         >
-          Get Ready 
-          <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-        </motion.a>
+          {copied ? <Check size={18} /> : <Copy size={18} />}
+          {copied ? "IP Copied" : "Copy Server IP"}
+        </motion.button>
+        {copyError && <p role="status" className="mb-6 text-sm text-slate-300">Could not copy automatically. Server address: <strong className="select-all">{SERVER_IP}</strong></p>}
 
         {/* Bottom Status Box */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-0 bg-[#111827]/75 backdrop-blur-md border border-[#00E5FF]/20 rounded-2xl p-6 shadow-[0_0_30px_rgba(0,0,0,0.5)] divide-y md:divide-y-0 md:divide-x divide-slate-800/50"
+          className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 bg-[#111827]/75 backdrop-blur-md border border-[#00E5FF]/20 rounded-2xl p-5 md:p-6 shadow-[0_0_30px_rgba(0,0,0,0.5)] divide-y md:divide-y-0 md:divide-x divide-slate-800/50"
         >
           {/* Section 1: Server IP & Status */}
           <div className="flex flex-col items-center md:items-start justify-center px-4 md:px-8 gap-3">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2" role="status" aria-live="polite">
               <div className={`w-2.5 h-2.5 rounded-full ${loading ? 'bg-slate-500 animate-pulse' : online ? 'bg-[#22C55E] shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-[#EF4444]'}`}></div>
               <span className={`text-xs font-bold tracking-wider uppercase font-montserrat ${loading ? 'text-slate-400' : online ? 'text-[#22C55E]' : 'text-[#EF4444]'}`}>
-                {loading ? 'Pinging...' : online ? 'Server Online' : 'Server Offline'}
+                {loading ? 'Checking status...' : syncError ? 'Sync unavailable' : online ? 'Server Online' : 'Server Offline'}
               </span>
             </div>
             
@@ -167,17 +187,19 @@ export default function Home() {
               <Users size={16} className="text-[#00E5FF]" />
               <span className="font-mono font-semibold tracking-wide">{SERVER_IP}</span>
               <button 
+                type="button"
                 onClick={copyIp}
-                className="hover:text-white transition-colors ml-1 text-slate-400 border border-transparent hover:border-slate-700 p-1 rounded"
+                className="min-w-11 min-h-11 inline-flex items-center justify-center hover:text-white transition-colors ml-1 text-slate-400 border border-slate-700/60 hover:border-[#00E5FF]/50 p-2 rounded-lg"
                 title="Copy IP"
+                aria-label={copied ? "Server IP copied" : `Copy server IP ${SERVER_IP}`}
               >
-                {copied ? <span className="text-xs font-bold text-[#22C55E] flex items-center gap-1"><Check size={14}/> COPIED</span> : <Copy size={14} />}
+                {copied ? <Check size={18} className="text-[#22C55E]" /> : <Copy size={18} />}
               </button>
             </div>
             
             <div className="flex items-center gap-2 text-slate-400 text-sm">
               <Users size={14} />
-              <span>Players: {loading ? '--' : online ? `${playerCount} / ${maxPlayers}` : '0 / 0'}</span>
+              <span>Players: {loading || syncError ? '--' : online ? `${playerCount} / ${maxPlayers}` : 'Server offline'}</span>
             </div>
           </div>
 
@@ -185,12 +207,15 @@ export default function Home() {
           <div className="flex flex-col items-center md:items-start justify-center px-4 md:px-8 gap-3 pt-6 md:pt-0">
             <div className="flex items-center gap-2 text-slate-400 text-xs font-bold tracking-wider uppercase font-montserrat">
               <Clock size={14} />
-              <span>Last Update</span>
+              <span>Last Successful Sync</span>
             </div>
             
             <div className="text-slate-100 text-sm font-medium">
               {lastUpdateDate ? formatDate(lastUpdateDate) : 'Awaiting data...'}
             </div>
+            <p className="text-slate-500 text-xs leading-relaxed">
+              Baghdad time. Saved rankings remain available while the server is offline.
+            </p>
           </div>
 
           {/* Section 3: Discord Button */}
@@ -211,5 +236,6 @@ export default function Home() {
 
       </div>
     </main>
+    </MotionConfig>
   );
 }

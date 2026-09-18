@@ -1,15 +1,20 @@
+import type { Metadata } from "next";
 import LeaderboardClient from "./LeaderboardClient";
 import { getLeaderboardSnapshot, type LeaderboardData } from "@/lib/leaderboards";
 
 export const dynamic = "force-dynamic";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Leaderboards | RawchySMP",
   description: "View the top players on RawchySMP. Live Money, Pul, Kills, Deaths, and Playtime leaderboards.",
+  alternates: {
+    canonical: "/leaderboards",
+  },
 };
 
 const fallbackData = {
   money: [], pul: [], kills: [], deaths: [], bounty: [], duels: [], playtime: [],
+  server: { online: 0, max: 0 },
 };
 
 export default async function LeaderboardsPage() {
@@ -34,7 +39,7 @@ export default async function LeaderboardsPage() {
         style={{ backgroundImage: "url('/bg-warrior.jpg')", backgroundAttachment: "fixed" }}
       ></div>
       <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#05070A] via-[#05070A]/80 to-[#05070A] pointer-events-none"></div>
-      <div className="absolute inset-0 z-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay pointer-events-none"></div>
+      <div className="world-texture absolute inset-0 z-0 opacity-30 mix-blend-overlay pointer-events-none"></div>
       
       <LeaderboardClient initialData={initialData} initialError={initialError} initialUpdatedAt={initialUpdatedAt} initialNow={initialNow} />
     </main>

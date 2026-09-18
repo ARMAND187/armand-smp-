@@ -15,9 +15,9 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-14 sm:h-16">
           <div className="flex items-center">
-            <Link href="/" className="flex-shrink-0 flex items-center gap-2 group">
+            <Link href="/" aria-label="RawchySMP home" className="flex-shrink-0 flex min-h-11 items-center gap-2 group">
               <Image src="/rawchysmp-logo.jpg" alt="RawchySMP logo" width={32} height={32} className="w-7 h-7 sm:w-8 sm:h-8 rounded-full border border-slate-700/50 group-hover:border-[#00E5FF]/50 transition-colors" />
-              <span className="text-sm sm:text-xl font-black tracking-tighter text-slate-50 uppercase drop-shadow-sm group-hover:text-white transition-colors">
+              <span className="hidden min-[360px]:inline text-sm sm:text-xl font-black tracking-tighter text-slate-50 uppercase drop-shadow-sm group-hover:text-white transition-colors">
                 RAWCHY<span className="text-[#00E5FF]">SMP</span>
               </span>
             </Link>
@@ -25,30 +25,33 @@ export function Navbar() {
               <div className="flex items-baseline space-x-8">
                 <Link 
                   href="/" 
-                  className={`px-3 py-2 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:bg-[#111827]/50 ${isHome ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
+                  aria-current={isHome ? "page" : undefined}
+                  className={`min-h-11 px-3 py-2 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:bg-[#111827]/50 inline-flex items-center ${isHome ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
                 >
                   Home
                 </Link>
                 <Link 
                   href="/leaderboards" 
-                  className={`px-3 py-2 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:bg-[#111827]/50 ${isLeaderboards ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
+                  aria-current={isLeaderboards ? "page" : undefined}
+                  className={`min-h-11 px-3 py-2 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:bg-[#111827]/50 inline-flex items-center ${isLeaderboards ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
                 >
                   Leaderboards
                 </Link>
               </div>
             </div>
           </div>
-          {/* Mobile menu simple */}
           <div className="flex md:hidden space-x-2">
             <Link 
               href="/" 
-              className={`text-[10px] px-2 py-2 font-bold uppercase transition-colors ${isHome ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
+              aria-current={isHome ? "page" : undefined}
+              className={`min-h-11 text-[11px] px-2 py-2 font-bold uppercase transition-colors inline-flex items-center ${isHome ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
             >
               Home
             </Link>
             <Link 
               href="/leaderboards" 
-              className={`text-[10px] px-2 py-2 font-bold uppercase transition-colors ${isLeaderboards ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
+              aria-current={isLeaderboards ? "page" : undefined}
+              className={`min-h-11 text-[11px] px-2 py-2 font-bold uppercase transition-colors inline-flex items-center ${isLeaderboards ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
             >
               Leaderboards
             </Link>
