@@ -175,7 +175,7 @@ export default function LeaderboardClient({
                   : `Server offline • Last sync: ${formatLastSync(lastUpdated)}`}
             </span>
             <span className="mt-1 text-center text-[11px] leading-relaxed text-slate-400 md:text-left">
-              {error ? "Saved rankings are still available. Retrying automatically." : online ? "Updates every 45 seconds. Times shown in Baghdad time." : "Last saved rankings, shown in Baghdad time. Waiting for the server to return."}
+              {error ? "Saved rankings are still available. Retrying automatically." : online ? "Updates every 45 seconds. Times shown in Erbil time." : "Last saved rankings, shown in Erbil time. Waiting for the server to return."}
             </span>
           </div>
         </div>

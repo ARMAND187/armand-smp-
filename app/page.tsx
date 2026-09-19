@@ -214,7 +214,7 @@ export default function Home() {
               {lastUpdateDate ? formatDate(lastUpdateDate) : 'Awaiting data...'}
             </div>
             <p className="text-slate-500 text-xs leading-relaxed">
-              Baghdad time. Saved rankings remain available while the server is offline.
+              Erbil time. Saved rankings remain available while the server is offline.
             </p>
           </div>
 
