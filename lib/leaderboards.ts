@@ -9,7 +9,7 @@ export async function getLeaderboardSnapshot() {
   if (!key) throw new Error("Missing SUPABASE_ANON_KEY");
   const response = await fetch(`${url}/rest/v1/leaderboards?id=eq.1&select=data,updated_at`, {
     headers: { apikey: key, Authorization: `Bearer ${key}` },
-    cache: "no-store", signal: AbortSignal.timeout(10_000),
+    next: { revalidate: 45 }, signal: AbortSignal.timeout(10_000),
   });
   if (!response.ok) throw new Error(`Leaderboard database returned ${response.status}`);
   const rows = await response.json();

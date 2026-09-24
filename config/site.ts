@@ -8,6 +8,14 @@ export const SOCIAL_LINKS = {
 export const SITE_CONFIG = {
   name: "RawchySMP",
   tagline: "The Hunter's World",
-  description: "A new adventure is coming. Build. Hunt. Survive. GO TOP. Coming soon!",
+  slogan: "Build. Hunt. Survive. GO TOP.",
+  description: "RawchySMP is a Kurdish Minecraft Survival Multiplayer server created and owned by Armand, featuring Java and Bedrock cross-play, custom gameplay and synchronized web leaderboards.",
   url: "https://rawchysmp.com",
+  creator: "Armand",
+  owner: "Armand",
+  manager: "Armand",
+  version: "1.21.1",
+  economies: ["Money", "Pul"],
+  crates: ["COMMON", "RANGER", "SPAWNER", "SLAYER", "MASTER", "RAWCHY"],
+  roles: ["BOOSTER", "MEDIA", "HUNTER"]
 };
