@@ -15,7 +15,6 @@ export default function Home() {
   const [copied, setCopied] = useState(false);
   const [loading, setLoading] = useState(true);
   const [lastUpdateDate, setLastUpdateDate] = useState<Date | null>(null);
-  const [copyError, setCopyError] = useState(false);
   const online = !syncError && isServerOnline(lastUpdateDate?.toISOString() ?? null, now);
 
   useEffect(() => {
@@ -67,11 +66,9 @@ export default function Home() {
   const copyIp = async () => {
     try {
       await navigator.clipboard.writeText(SERVER_IP);
-      setCopyError(false);
       setCopied(true);
     } catch {
       setCopied(false);
-      setCopyError(true);
     }
   };
 

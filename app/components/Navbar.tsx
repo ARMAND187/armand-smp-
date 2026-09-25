@@ -37,6 +37,13 @@ export function Navbar() {
                 >
                   Leaderboards
                 </Link>
+                <Link 
+                  href="/rules" 
+                  aria-current={pathname === '/rules' ? "page" : undefined}
+                  className={`min-h-11 px-3 py-2 rounded-md text-sm font-bold uppercase tracking-wider transition-all duration-200 hover:bg-[#111827]/50 inline-flex items-center ${pathname === '/rules' ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
+                >
+                  Rules
+                </Link>
               </div>
             </div>
           </div>
@@ -54,6 +61,13 @@ export function Navbar() {
               className={`min-h-11 text-[11px] px-2 py-2 font-bold uppercase transition-colors inline-flex items-center ${isLeaderboards ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
             >
               Leaderboards
+            </Link>
+            <Link 
+              href="/rules" 
+              aria-current={pathname === '/rules' ? "page" : undefined}
+              className={`min-h-11 text-[11px] px-2 py-2 font-bold uppercase transition-colors inline-flex items-center ${pathname === '/rules' ? 'text-[#00E5FF] shadow-[0_2px_0_0_#00E5FF]' : 'text-[#CBD5E1] hover:text-[#00E5FF]'}`}
+            >
+              Rules
             </Link>
           </div>
         </div>

@@ -4,12 +4,14 @@ import "./globals.css";
 import { SITE_CONFIG } from "@/config/site";
 import { Analytics } from "@vercel/analytics/next";
 import { Navbar } from "./components/Navbar";
+import { Footer } from "./components/Footer";
 
 const inter = Inter({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-rawchy-sans",
 });
+
 
 const montserrat = Montserrat({
   subsets: ["latin"],
@@ -108,9 +110,10 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased bg-[#05070A] text-slate-100 min-h-screen flex flex-col">
         <Navbar />
-        <div className="flex-grow">
+        <div className="flex-grow flex flex-col">
           {children}
         </div>
+        <Footer />
         <Analytics />
       </body>
     </html>
