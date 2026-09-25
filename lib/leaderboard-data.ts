@@ -1,5 +1,5 @@
 export const LEADERBOARD_CATEGORIES = [
-  "money", "pul", "kills", "deaths", "bounty", "duels", "playtime",
+  "money", "pul", "kills", "deaths", "bounty", "duels", "playtime", "clan_kills", "clan_money",
 ] as const;
 
 export type LeaderboardItem = { rank: number; name: string; value: string };

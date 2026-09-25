@@ -14,6 +14,8 @@ const CATEGORIES = [
   { id: "bounty", icon: "🏹", label: "BOUNTY", title: "Top Bounty" },
   { id: "duels", icon: "⚔️", label: "DUEL WINS", title: "Top Duel Wins" },
   { id: "playtime", icon: "⏱️", label: "PLAYTIME", title: "Top Playtime" },
+  { id: "clan_kills", icon: "🏆", label: "CLAN KILLS", title: "TOP CLAN KILLS" },
+  { id: "clan_money", icon: "👑", label: "RICHEST CLANS", title: "RICHEST CLAN" },
 ] as const;
 
 type CategoryId = (typeof CATEGORIES)[number]["id"];
@@ -24,7 +26,7 @@ const rankedCategories = CATEGORIES.filter(
 );
 
 function displayValue(category: string, value: string) {
-  return category === "money" && !value.startsWith("$") ? `$${value}` : value;
+  return (category === "money" || category === "clan_money") && !value.startsWith("$") ? `$${value}` : value;
 }
 
 export default function LeaderboardClient({
@@ -253,7 +255,7 @@ export default function LeaderboardClient({
                               </div>
                               <p className="mt-3 font-montserrat text-xs font-bold uppercase tracking-wider text-slate-400">{category.title}</p>
                               <div className="mt-1 flex items-baseline justify-between gap-3">
-                                <strong className="truncate text-base text-slate-100">{winner?.name.trim() ?? "No ranked players yet"}</strong>
+                                <strong className="truncate text-base text-slate-100">{winner?.name.trim() ?? (category.id.startsWith("clan_") ? "No ranked clans yet" : "No ranked players yet")}</strong>
                                 <span className="shrink-0 font-mono text-sm font-bold text-[#00E5FF]">
                                   {winner ? displayValue(category.id, winner.value.trim()) : "--"}
                                 </span>

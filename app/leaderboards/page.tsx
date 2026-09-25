@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 const fallbackData = {
-  money: [], pul: [], kills: [], deaths: [], bounty: [], duels: [], playtime: [],
+  money: [], pul: [], kills: [], deaths: [], bounty: [], duels: [], playtime: [], clan_kills: [], clan_money: [],
   server: { online: 0, max: 0 },
 };
 
