@@ -115,18 +115,18 @@ export default function RulesPage() {
               </p>
               <p className="text-slate-400 mb-3">سزا دەتوانێت بریتی بێت لە:</p>
             </div>
-            <div className="flex flex-wrap items-center gap-2 mt-4" dir="ltr">
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Warning</span>
-              <span className="text-slate-500 font-bold opacity-50">→</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Mute</span>
-              <span className="text-slate-500 font-bold opacity-50">→</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Temporary Ban</span>
-              <span className="text-slate-500 font-bold opacity-50">→</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Statistics Reset</span>
-              <span className="text-slate-500 font-bold opacity-50">→</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Data Reset</span>
-              <span className="text-slate-500 font-bold opacity-50">→</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Permanent Ban</span>
+            <div className="grid grid-cols-2 md:flex md:flex-wrap md:items-center gap-3 md:gap-2 mt-5" dir="ltr">
+              <span className="bg-red-500/10 text-red-400 px-2 py-2 md:px-3 md:py-1 rounded-lg md:rounded-full text-[11px] sm:text-xs md:text-sm font-semibold border border-red-500/20 shadow-sm flex items-center justify-center text-center">Warning</span>
+              <span className="hidden md:inline text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-2 py-2 md:px-3 md:py-1 rounded-lg md:rounded-full text-[11px] sm:text-xs md:text-sm font-semibold border border-red-500/20 shadow-sm flex items-center justify-center text-center">Mute</span>
+              <span className="hidden md:inline text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-2 py-2 md:px-3 md:py-1 rounded-lg md:rounded-full text-[11px] sm:text-xs md:text-sm font-semibold border border-red-500/20 shadow-sm flex items-center justify-center text-center">Temporary Ban</span>
+              <span className="hidden md:inline text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-2 py-2 md:px-3 md:py-1 rounded-lg md:rounded-full text-[11px] sm:text-xs md:text-sm font-semibold border border-red-500/20 shadow-sm flex items-center justify-center text-center">Statistics Reset</span>
+              <span className="hidden md:inline text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-2 py-2 md:px-3 md:py-1 rounded-lg md:rounded-full text-[11px] sm:text-xs md:text-sm font-semibold border border-red-500/20 shadow-sm flex items-center justify-center text-center">Data Reset</span>
+              <span className="hidden md:inline text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-2 py-2 md:px-3 md:py-1 rounded-lg md:rounded-full text-[11px] sm:text-xs md:text-sm font-semibold border border-red-500/20 shadow-sm flex items-center justify-center text-center">Permanent Ban</span>
             </div>
             <div dir="rtl">
                 <p className="text-slate-400 text-sm mt-2">یاساکان دەکرێت لە هەر کاتێکدا نوێ بکرێنەوە.</p>
