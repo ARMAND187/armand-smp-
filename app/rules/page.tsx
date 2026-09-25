@@ -19,8 +19,8 @@ export default function RulesPage() {
         
         {/* Header */}
         <section className="text-center mb-6">
-          <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tighter font-montserrat mb-4">
-            <span className="text-slate-50">📜 RAWCHY</span><span className="text-[#00E5FF]">SMP</span>
+          <h1 className="text-4xl md:text-5xl font-black tracking-tighter font-montserrat mb-4">
+            <span className="text-slate-50">📜 Rawchy</span><span className="text-[#00E5FF]">SMP</span>
           </h1>
           <h2 className="text-xl md:text-2xl font-bold text-slate-200 mb-6">
             Server Rules | یاساکانی سێرڤەری ڕاوچی
@@ -76,7 +76,7 @@ export default function RulesPage() {
             <h3 className="text-xl md:text-2xl font-bold text-slate-100 mb-2 font-montserrat tracking-wide">4. Economy & Trading 💰</h3>
             <h4 className="text-lg text-[#00E5FF] mb-4 font-bold" dir="rtl">ئابووری و کڕین و فرۆشتن</h4>
             <div className="text-slate-300 space-y-4 leading-loose text-base md:text-lg" dir="rtl">
-              <p>گۆڕینەوەی شتومەکی نێو یاری، <span dir="ltr" className="inline-block text-[#22C55E] font-bold mx-1">Money</span>، <span dir="ltr" className="inline-block text-[#00E5FF] font-bold mx-1">Pul</span>، یان هەر شتێکی سێرڤەر بە پارەی ڕاستەقینە بەبێ ڕێگەپێدانی ڕاوچی قەدەغەیە.</p>
+              <p>گۆڕینەوەی شتومەکی نێو یاری، <span dir="ltr" className="inline-block text-[#22C55E] font-bold mx-1">Money</span>، <span dir="ltr" className="inline-block text-[#00E5FF] font-bold mx-1">Pul</span>، یان هەر شتێکی سێرڤەر بە پارەی ڕاستەقینە بە توندی قەدەغەیە.</p>
               <p>فێڵکردن لە یاریزانانی تر لە کاتی مامەڵەکردن قەدەغەیە.</p>
             </div>
           </div>
@@ -115,13 +115,18 @@ export default function RulesPage() {
               </p>
               <p className="text-slate-400 mb-3">سزا دەتوانێت بریتی بێت لە:</p>
             </div>
-            <div className="flex flex-wrap gap-2" dir="ltr">
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20">Warning</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20">Mute</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20">Temporary Ban</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20">Statistics Reset</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20">Data Reset</span>
-              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20">Permanent Ban</span>
+            <div className="flex flex-wrap items-center gap-2 mt-4" dir="ltr">
+              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Warning</span>
+              <span className="text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Mute</span>
+              <span className="text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Temporary Ban</span>
+              <span className="text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Statistics Reset</span>
+              <span className="text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Data Reset</span>
+              <span className="text-slate-500 font-bold opacity-50">→</span>
+              <span className="bg-red-500/10 text-red-400 px-3 py-1 rounded-full text-sm font-semibold border border-red-500/20 shadow-sm">Permanent Ban</span>
             </div>
             <div dir="rtl">
                 <p className="text-slate-400 text-sm mt-2">یاساکان دەکرێت لە هەر کاتێکدا نوێ بکرێنەوە.</p>

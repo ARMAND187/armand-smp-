@@ -10,8 +10,8 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
           {/* Brand */}
           <div className="flex flex-col gap-2 text-center md:text-left">
-            <h2 className="text-xl font-black tracking-tighter text-slate-50 uppercase drop-shadow-sm">
-              RAWCHY<span className="text-[#00E5FF]">SMP</span>
+            <h2 className="text-xl font-black tracking-tighter text-slate-50 drop-shadow-sm">
+              Rawchy<span className="text-[#00E5FF]">SMP</span>
             </h2>
             <p className="text-slate-400 text-sm font-semibold tracking-[0.2em] uppercase">
               The Hunter&apos;s World
