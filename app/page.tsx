@@ -194,9 +194,11 @@ export default function Home() {
             >
               <svg viewBox="0 0 24 24" width="28" height="28" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                 <rect x="2" y="2" width="20" height="20" rx="5" ry="5" stroke="#FFFFFF"></rect>
-                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="#25F4EE" transform="translate(-0.5, -0.5)"></path>
-                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="#FE2C55" transform="translate(0.5, 0.5)"></path>
-                <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="#FFFFFF"></path>
+                <g transform="scale(0.75) translate(3.5, 4.5)" strokeWidth="2.6">
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="#25F4EE" transform="translate(-1.2, 1.2)"></path>
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="#FE2C55" transform="translate(1.2, -1.2)"></path>
+                  <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" stroke="#FFFFFF"></path>
+                </g>
               </svg>
             </a>
           </div>
