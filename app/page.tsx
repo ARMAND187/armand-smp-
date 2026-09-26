@@ -219,7 +219,10 @@ export default function Home() {
             
             <div className="flex items-center gap-2 text-slate-100">
               <Users size={16} className="text-[#00E5FF]" />
-              <span className="font-mono font-semibold tracking-wide">{SERVER_IP}</span>
+              <div className="flex flex-col">
+                <span className="font-mono font-semibold tracking-wide text-lg md:text-xl leading-tight">{SERVER_IP}</span>
+                <span className="font-mono text-[11px] text-slate-400/80 leading-tight">Bedrock Port: 25629</span>
+              </div>
               <button 
                 type="button"
                 onClick={copyIp}
@@ -273,3 +276,4 @@ export default function Home() {
     </MotionConfig>
   );
 }
+

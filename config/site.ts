@@ -1,5 +1,5 @@
 export const DISCORD_URL = "https://discord.gg/8jVn8bzFeB";
-export const SERVER_IP = "rawchysmp.com";
+export const SERVER_IP = "play.rawchysmp.com";
 
 export const SOCIAL_LINKS = {
   discord: DISCORD_URL,
@@ -19,3 +19,4 @@ export const SITE_CONFIG = {
   crates: ["COMMON", "RANGER", "SPAWNER", "SLAYER", "MASTER", "RAWCHY"],
   roles: ["BOOSTER", "MEDIA", "HUNTER"]
 };
+
