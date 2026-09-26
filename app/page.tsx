@@ -217,21 +217,28 @@ export default function Home() {
               </span>
             </div>
             
-            <div className="flex items-center gap-2 text-slate-100">
-              <Users size={16} className="text-[#00E5FF]" />
-              <div className="flex flex-col">
-                <span className="font-mono font-semibold tracking-wide text-lg md:text-xl leading-tight">{SERVER_IP}</span>
-                <span className="font-mono text-[11px] text-slate-400/80 leading-tight">Bedrock Port: 25629</span>
+            <div className="flex flex-col gap-1 w-full items-center md:items-start">
+              <div className="flex items-center gap-2 text-slate-100 relative group">
+                <Users size={16} className="text-[#00E5FF] shrink-0 hidden md:block" />
+                <span className="font-mono font-semibold tracking-wide text-lg md:text-xl leading-none">{SERVER_IP}</span>
+                <button 
+                  type="button"
+                  onClick={copyIp}
+                  className="inline-flex items-center justify-center hover:text-white transition-colors text-slate-400 p-1.5 rounded-md hover:bg-white/5 relative"
+                  title="Copy IP"
+                  aria-label={copied ? "Server IP copied" : `Copy server IP ${SERVER_IP}`}
+                >
+                  {copied ? <Check size={16} className="text-[#22C55E]" /> : <Copy size={16} />}
+                  {copied && (
+                    <span className="absolute -top-8 left-1/2 -translate-x-1/2 bg-[#22C55E]/20 text-[#22C55E] text-[10px] px-2 py-1 rounded font-bold uppercase tracking-wider backdrop-blur-sm whitespace-nowrap">
+                      Copied!
+                    </span>
+                  )}
+                </button>
               </div>
-              <button 
-                type="button"
-                onClick={copyIp}
-                className="min-w-11 min-h-11 inline-flex items-center justify-center hover:text-white transition-colors ml-1 text-slate-400 border border-slate-700/60 hover:border-[#00E5FF]/50 p-2 rounded-lg"
-                title="Copy IP"
-                aria-label={copied ? "Server IP copied" : `Copy server IP ${SERVER_IP}`}
-              >
-                {copied ? <Check size={18} className="text-[#22C55E]" /> : <Copy size={18} />}
-              </button>
+              <div className="md:pl-6">
+                <span className="font-mono text-[13px] text-slate-400/90 font-medium">Bedrock Port: 25629</span>
+              </div>
             </div>
             
             <div className="flex items-center gap-2 text-slate-400 text-sm">
@@ -276,4 +283,5 @@ export default function Home() {
     </MotionConfig>
   );
 }
+
 
