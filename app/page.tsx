@@ -206,10 +206,10 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-0 bg-[#111827]/75 backdrop-blur-md border border-[#00E5FF]/20 rounded-2xl p-5 md:p-6 shadow-[0_0_30px_rgba(0,0,0,0.5)] divide-y md:divide-y-0 md:divide-x divide-slate-800/50"
+          className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-[1.25fr_1fr_1fr] gap-4 md:gap-0 bg-[#111827]/75 backdrop-blur-md border border-[#00E5FF]/20 rounded-2xl p-5 md:p-6 shadow-[0_0_30px_rgba(0,0,0,0.5)] divide-y md:divide-y-0 md:divide-x divide-slate-800/50"
         >
           {/* Section 1: Server IP & Status */}
-          <div className="flex flex-col items-center md:items-start justify-center px-4 md:px-8 gap-3">
+          <div className="flex flex-col items-center md:items-start justify-center px-4 md:pl-6 md:pr-2 gap-3">
             <div className="flex items-center gap-2" role="status" aria-live="polite">
               <div className={`w-2.5 h-2.5 rounded-full ${loading ? 'bg-slate-500 animate-pulse' : online ? 'bg-[#22C55E] shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-[#EF4444]'}`}></div>
               <span className={`text-xs font-bold tracking-wider uppercase font-montserrat ${loading ? 'text-slate-400' : online ? 'text-[#22C55E]' : 'text-[#EF4444]'}`}>
@@ -220,7 +220,7 @@ export default function Home() {
             <div className="flex flex-col gap-1 w-full items-center md:items-start">
               <div className="flex items-center gap-2 text-slate-100 relative group">
                 <Users size={16} className="text-[#00E5FF] shrink-0 hidden md:block" />
-                <span className="font-mono font-semibold tracking-wide text-lg md:text-xl leading-none">{SERVER_IP}</span>
+                <span className="font-mono font-semibold tracking-wide text-lg md:text-[1.1rem] leading-none">{SERVER_IP}</span>
                 <button 
                   type="button"
                   onClick={copyIp}
@@ -283,5 +283,6 @@ export default function Home() {
     </MotionConfig>
   );
 }
+
 
 
