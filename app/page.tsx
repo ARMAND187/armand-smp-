@@ -206,10 +206,10 @@ export default function Home() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}
-          className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-[1.25fr_1fr_1fr] gap-4 md:gap-0 bg-[#111827]/75 backdrop-blur-md border border-[#00E5FF]/20 rounded-2xl p-5 md:p-6 shadow-[0_0_30px_rgba(0,0,0,0.5)] divide-y md:divide-y-0 md:divide-x divide-slate-800/50"
+          className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-[1.3fr_1fr_1fr] gap-4 md:gap-0 bg-[#111827]/75 backdrop-blur-md border border-[#00E5FF]/20 rounded-2xl p-5 md:p-6 shadow-[0_0_30px_rgba(0,0,0,0.5)] divide-y md:divide-y-0 md:divide-x divide-slate-800/50"
         >
           {/* Section 1: Server IP & Status */}
-          <div className="flex flex-col items-center md:items-start justify-center px-4 md:pl-6 md:pr-2 gap-3">
+          <div className="flex flex-col items-center md:items-start justify-center px-4 md:pl-2 md:pr-4 gap-3">
             <div className="flex items-center gap-2" role="status" aria-live="polite">
               <div className={`w-2.5 h-2.5 rounded-full ${loading ? 'bg-slate-500 animate-pulse' : online ? 'bg-[#22C55E] shadow-[0_0_8px_rgba(34,197,94,0.6)]' : 'bg-[#EF4444]'}`}></div>
               <span className={`text-xs font-bold tracking-wider uppercase font-montserrat ${loading ? 'text-slate-400' : online ? 'text-[#22C55E]' : 'text-[#EF4444]'}`}>
@@ -283,6 +283,7 @@ export default function Home() {
     </MotionConfig>
   );
 }
+
 
 
 
