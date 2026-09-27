@@ -96,7 +96,7 @@ export default function Home() {
           transition={{ duration: 0.5 }}
           className="inline-flex items-center justify-center px-6 py-1.5 rounded-full border border-[#00E5FF]/50 bg-[#00E5FF]/10 text-[#00E5FF] font-bold tracking-widest text-xs md:text-sm uppercase mb-8 md:mb-4 shadow-[0_0_15px_rgba(0,229,255,0.15)] font-montserrat"
         >
-          Coming Soon
+          PLAY NOW
         </motion.div>
 
         <motion.div
@@ -146,7 +146,7 @@ export default function Home() {
           transition={{ duration: 0.5, delay: 0.3 }}
           className="max-w-2xl mb-5 flex flex-col gap-2"
         >
-          <p className="text-slate-400 text-sm md:text-base font-normal">A new adventure is coming.</p>
+          <p className="text-slate-400 text-sm md:text-base font-normal">Your adventure starts now.</p>
           <p className="text-slate-50 text-sm md:text-base font-bold tracking-widest uppercase font-montserrat">Build. Hunt. Survive. <span className="text-[#00E5FF]">GO TOP</span></p>
         </motion.div>
 
